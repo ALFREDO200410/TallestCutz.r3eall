@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tallest Cutz | Professional Barber</title>
+    <style>
+        /* ===== GLOBAL STYLES ===== */
+        * {margin:0; padding:0; box-sizing:border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;}
+        body {background-color:#111; color:#fff; overflow-x: hidden;}
+        a {text-decoration:none;}
+        .container {width:90%; max-width:1200px; margin:0 auto;}
+
+        /* ===== HERO ===== */
+        .hero {
+            height:100vh;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1605462863863-2b4467e7b5d0?auto=format&fit=crop&w=1500&q=80') center/cover no-repeat;
+            display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;
+        }
+        .hero h1 {font-size:4em; margin-bottom:10px; color:#FFD700; text-transform: uppercase; letter-spacing: 2px;}
+        .hero p {font-size:1.3em; margin-bottom:30px; color: #eee;}
+        .btn {padding:15px 40px; background-color:#FFD700; color:#111; font-weight:bold; border-radius:5px; transition:0.3s; display: inline-block;}
+        .btn:hover {background-color:#fff; transform: translateY(-3px);}
+
+        /* ===== BOOKING SECTION ===== */
+        .booking-section {padding:80px 0; background-color:#1a1a1a;}
+        .booking-container {display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start;}
+        
+        .price-list h3 {color:#FFD700; margin-bottom:15px; border-bottom: 1px solid #333; padding-bottom: 10px;}
+        .price-list ul {list-style:none; margin-bottom:30px;}
+        .price-list li {padding: 10px 0; border-bottom: 1px solid #222; color:#ddd; display: flex; justify-content: space-between;}
+
+        .booking-card {background-color:#222; padding:30px; border-radius:15px; border: 1px solid #333;}
+        .booking-card h2 {text-align:center; color:#FFD700; margin-bottom:25px;}
+        
+        label {display:block; margin-bottom:8px; font-weight:bold; color:#FFD700; font-size: 0.85em; text-transform: uppercase;}
+        input, select {width:100%; padding:12px; margin-bottom:20px; border-radius:5px; border:1px solid #444; background:#333; color:#fff; outline: none;}
+        
+        .total-box {
+            background: #333; padding: 15px; border-radius: 5px; text-align: center; margin-bottom: 20px; border: 1px dashed #FFD700;
+        }
+        .total-box span { font-size: 1.4em; color: #FFD700; font-weight: bold; }
+
+        .booking-card button {width:100%; padding:15px; background-color:#FFD700; color:#111; font-weight:bold; border:none; border-radius:5px; cursor:pointer; font-size:1.1em; transition: 0.3s;}
+        .booking-card button:hover {background-color:#fff;}
+
+        /* ===== TESTIMONIALS ===== */
+        .testimonials {padding:80px 0; text-align:center;}
+        .testimonials h2 {font-size:2.5em; margin-bottom:40px; color:#FFD700;}
+        .testimonial-grid {display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;}
+        .testimonial {background: #222; padding: 25px; border-radius: 10px; border-bottom: 4px solid #FFD700;}
+        .stars {color: #FFD700; margin-bottom: 10px;}
+
+        /* ===== POLICIES ===== */
+        .policies {padding:80px 0; background-color:#111;}
+        .policies-content {max-width:800px; margin:0 auto;}
+        .policies h2 {text-align: center; color:#FFD700; margin-bottom:40px;}
+        .policy-item {margin-bottom: 20px; padding: 15px; background: #1a1a1a; border-left: 4px solid #FFD700;}
+
+        footer {padding:40px 0; text-align:center; border-top: 1px solid #333; color: #888;}
+
+        @media(max-width:768px){ .booking-container {grid-template-columns: 1fr;} .hero h1 {font-size: 2.8em;} }
+    </style>
+</head>
+<body>
+
+<section class="hero">
+    <h1>Tallest Cutz</h1>
+    <p>Precision Grooming • Shop & Mobile Service</p>
+    <a href="#booking" class="btn">SECURE YOUR SLOT</a>
+</section>
+
+<section class="booking-section" id="booking">
+    <div class="container">
+        <div class="booking-container">
+            
+            <div class="price-list">
+                <h3>🏠 House Shop Menu</h3>
+                <ul>
+                    <li><span>Full Barbing</span> <span>₦2,000</span></li>
+                    <li><span>Barbing + Dye</span> <span>₦3,500</span></li>
+                    <li><span>Line-up & Shaving</span> <span>₦1,000</span></li>
+                </ul>
+
+                <h3>🚗 Home Service Menu</h3>
+                <ul>
+                    <li><span>Full Barbing</span> <span>₦3,000</span></li>
+                    <li><span>Barbing + Dye</span> <span>₦4,500</span></li>
+                    <li><span>Line-up & Shaving</span> <span>₦1,500</span></li>
+                </ul>
+                <p style="color: #888; font-size: 0.9em;">*Prices shown are per person.</p>
+            </div>
+
+            <div class="booking-card">
+                <h2>Booking Form</h2>
+                
+                <label>Full Name</label>
+                <input type="text" id="name" placeholder="Who is booking?">
+
+                <label>Location Type</label>
+                <select id="location" onchange="updateServiceOptions()">
+                    <option value="House Shop">House Shop (At our location)</option>
+                    <option value="Home Service">Home Service (I come to you)</option>
+                </select>
+
+                <label>Select Service</label>
+                <select id="service" onchange="calculateTotal()"></select>
+
+                <label>Number of Clients</label>
+                <input type="number" id="clients" value="1" min="1" max="10" oninput="calculateTotal()">
+
+                <div style="display:flex; gap:15px;">
+                    <div style="flex:1;">
+                        <label>Date</label>
+                        <input type="date" id="date">
+                    </div>
+                    <div style="flex:1;">
+                        <label>Time (7:00 AM - 6:30 PM)</label>
+                        <input type="time" id="time">
+                    </div>
+                </div>
+
+                <div class="total-box">
+                    TOTAL AMOUNT: <br> <span id="displayTotal">₦0</span>
+                </div>
+
+                <button onclick="sendBooking()">Confirm via WhatsApp</button>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section class="testimonials">
+    <div class="container">
+        <h2>Client Feedback</h2>
+        <div class="testimonial-grid">
+            <div class="testimonial">
+                <div class="stars">⭐⭐⭐⭐⭐</div>
+                <p>"The home service is incredibly convenient. Tallest Cutz arrived exactly on time and the fade was surgical!"</p>
+                <small>- David O.</small>
+            </div>
+            <div class="testimonial">
+                <div class="stars">⭐⭐⭐⭐⭐</div>
+                <p>"Best barber in the area. Very hygienic tools and a very cool atmosphere at the house shop."</p>
+                <small>- Samuel K.</small>
+            </div>
+            <div class="testimonial">
+                <div class="stars">⭐⭐⭐⭐⭐</div>
+                <p>"Took my two sons for a cut. He was patient and the total price was very fair for the quality."</p>
+                <small>- Mr. Ibrahim</small>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="policies">
+    <div class="container">
+        <div class="policies-content">
+            <h2>Our Guidelines</h2>
+            <div class="policy-item"><strong>Strict Hours:</strong> We operate strictly between 07:00 AM and 06:30 PM. Bookings outside these hours will not be honored.</div>
+            <div class="policy-item"><strong>Home Service:</strong> Please ensure a comfortable chair and adequate lighting are available for home visits.</div>
+            <div class="policy-item"><strong>Grace Period:</strong> 15 minutes late may result in a rescheduling to respect the next client's time.</div>
+            <div class="policy-item"><strong>Sanitation:</strong> All clippers and blades are medical-grade sterilized after every single use. No exceptions.</div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <p>Tallest Cutz &copy; 2026 | +234 90 145 233 20</p>
+    </div>
+</footer>
+
+<script>
+    const servicesData = {
+        "House Shop": [
+            { name: "Full Barbing", price: 2000 },
+            { name: "Barbing + Dye", price: 3500 },
+            { name: "Line-up & Shaving", price: 1000 },
+            { name: "Line-up & Dye", price: 1500 }
+        ],
+        "Home Service": [
+            { name: "Full Barbing", price: 3000 },
+            { name: "Barbing + Dye", price: 4500 },
+            { name: "Line-up & Shaving", price: 1500 },
+            { name: "Line-up & Dye", price: 2000 }
+        ]
+    };
+
+    function updateServiceOptions() {
+        const location = document.getElementById("location").value;
+        const serviceSelect = document.getElementById("service");
+        serviceSelect.innerHTML = "";
+        servicesData[location].forEach(item => {
+            const option = document.createElement("option");
+            option.value = item.price; 
+            option.textContent = `${item.name} - ₦${item.price.toLocaleString()}`;
+            option.dataset.name = item.name;
+            serviceSelect.appendChild(option);
+        });
+        calculateTotal();
+    }
+
+    function calculateTotal() {
+        const pricePerPerson = parseInt(document.getElementById("service").value);
+        const numClients = parseInt(document.getElementById("clients").value) || 1;
+        const total = pricePerPerson * numClients;
+        document.getElementById("displayTotal").textContent = "₦" + total.toLocaleString();
+    }
+
+    function setInitialDateTime() {
+        const now = new Date();
+        // Set Date to Today
+        const today = now.toISOString().split('T')[0];
+        document.getElementById("date").value = today;
+        document.getElementById("date").setAttribute('min', today); // Prevent past dates
+
+        // Set Time to Now (rounded to nearest minute)
+        let hours = now.getHours().toString().padStart(2, '0');
+        let minutes = now.getMinutes().toString().padStart(2, '0');
+        document.getElementById("time").value = `${hours}:${minutes}`;
+    }
+
+    function sendBooking() {
+        const name = document.getElementById("name").value;
+        const location = document.getElementById("location").value;
+        const servicePrice = document.getElementById("service").value;
+        const serviceName = document.getElementById("service").selectedOptions[0].dataset.name;
+        const clients = document.getElementById("clients").value;
+        const date = document.getElementById("date").value;
+        const time = document.getElementById("time").value;
+        const total = document.getElementById("displayTotal").textContent;
+
+        // Time Validation (7:00 AM - 6:30 PM)
+        const [h, m] = time.split(':').map(Number);
+        const timeValue = h + m/60;
+        
+        if (timeValue < 7 || timeValue > 18.5) {
+            alert("Sorry! We are only open from 7:00 AM to 6:30 PM.");
+            return;
+        }
+
+        if (!name || !date || !time) {
+            alert("Please provide your name, date, and preferred time.");
+            return;
+        }
+
+        const message = `*NEW BOOKING: Tallest Cutz*%0A%0A` +
+                        `*Client Name:* ${encodeURIComponent(name)}%0A` +
+                        `*Location:* ${encodeURIComponent(location)}%0A` +
+                        `*Service:* ${encodeURIComponent(serviceName)}%0A` +
+                        `*No. of People:* ${clients}%0A` +
+                        `*Date:* ${date}%0A` +
+                        `*Time:* ${time}%0A` +
+                        `--------------------%0A` +
+                        `*TOTAL AMOUNT:* ${total}`;
+
+        window.open(`https://wa.me/2349014523320?text=${message}`, "_blank");
+    }
+
+    window.onload = () => {
+        updateServiceOptions();
+        setInitialDateTime();
+    };
+</script>
+
+</body>
+</html>
